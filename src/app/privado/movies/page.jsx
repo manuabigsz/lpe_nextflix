@@ -5,24 +5,13 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import Loading from '@/componentes/comuns/Loading';
-import { getVideosDB, deleteVideoDB } from '@/bd/usecases/videoUseCases';
-
+import { getVideosDB } from '@/bd/usecases/videoUseCases';
+import { deleteVideo } from './action';
 export const dynamic = 'force-dynamic';
 
 export default async function Video() {
 
     const videos = await getVideosDB();
-
-    const deleteVideo = async (id) => {
-        'use server';
-        try {
-            await deleteVideoDB(id);
-        } catch (err) {
-            console.log('Erro: ' + err);
-            throw new Error('Erro: ' + err);
-        }
-        redirect('/privado/movies');
-    }
 
     return (
         <div style={{ padding: '20px' }}>
@@ -53,10 +42,11 @@ export default async function Video() {
                                             <i className="bi bi-pencil-square"></i> Editar
                                         </Link>
                                         <form action={deleteVideo.bind(null, video.id)} className="d-inline">
-                                            <Button variant="danger" type="submit">
-                                                <i className="bi bi-trash"></i> Excluir
-                                            </Button>
-                                        </form>
+    <Button variant="danger" type="submit">
+        <i className="bi bi-trash"></i> Excluir
+    </Button>
+</form>
+
                                     </div>
                                 </Card.Body>
                             </Card>
