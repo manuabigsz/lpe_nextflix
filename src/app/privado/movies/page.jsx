@@ -41,11 +41,7 @@ export default async function Video() {
                                             href={`/privado/video/${video.id}/formulario`}>
                                             <i className="bi bi-pencil-square"></i> Editar
                                         </Link>
-                                        <form action={deleteVideo.bind(null, video.id)} className="d-inline">
-    <Button variant="danger" type="submit">
-        <i className="bi bi-trash"></i> Excluir
-    </Button>
-</form>
+           
 
                                     </div>
                                 </Card.Body>
