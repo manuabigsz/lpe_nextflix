@@ -3,7 +3,12 @@ import Link from 'next/link';
 export default function Header() {
   return (
     <header className="d-flex justify-content-between align-items-center p-3 bg-black">
-      <h1 className="text-danger fw-bold">NexFlix</h1>
+      <Link href="/" passHref legacyBehavior>
+        <a className="text-decoration-none">
+          <h1 className="text-danger fw-bold m-0">NextFlix</h1>
+        </a>
+      </Link>
+
       <nav>
         <ul className="nav">
           <li className="nav-item">

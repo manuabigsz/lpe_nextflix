@@ -1,7 +1,8 @@
 class Categoria {
-    constructor(codigo, nome){
+    constructor(codigo, nome, descricao){
         this.codigo = codigo;
         this.nome = nome;
+        this.descricao = descricao;
     }
 }
 
