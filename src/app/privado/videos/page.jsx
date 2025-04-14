@@ -24,7 +24,7 @@ return (
 <Suspense fallback={<Loading />}>
 <h1>Vídeos</h1>
 <Link className='btn btn-primary'
-href={`/privado/video/${0}/formulario`}>
+href={`/privado/videos/${0}/formulario`}>
 <i className='bi bi-file-earmark-plus'></i> Novo
 </Link>
 <Table striped bordered hover>
@@ -51,7 +51,7 @@ href={`/privado/video/${0}/formulario`}>
           <i className="bi bi-trash"></i>
         </Button>
       </form>
-      <Link className="btn btn-secondary ms-1" href={`/privado/video/${video.id}`}>
+      <Link className="btn btn-secondary ms-1" href={`/privado/videos/${video.id}`}>
         <i className="bi bi-eye"></i>
       </Link>
     </td>
