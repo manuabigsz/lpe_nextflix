@@ -4,7 +4,7 @@ const Categoria = require('../entities/Categoria');
 const getCategoriasDB = async () => {
     try {
         const { rows } = await pool.query(`SELECT * FROM categorias ORDER BY nome`);
-        return rows.map((categoria) => new Categoria(categoria.codigo, categoria.nome, categoria.descricao));
+        return rows.map((categoria) => new Categoria(categoria.codigo, categoria.nome));
     } catch (err) {
         throw "Erro: " + err;
     }
@@ -12,7 +12,8 @@ const getCategoriasDB = async () => {
 
 const deleteCategoriaDB = async (codigo) => {
     try {
-        const results = await pool.query(`DELETE FROM categorias WHERE codigo = $1`, [codigo]);
+        const results = await pool.query(`DELETE FROM categorias
+        WHERE codigo = $1`, [codigo]);
         if (results.rowCount == 0) {
             throw `Nenhum registro encontrado com o código ${codigo} para ser removido`;
         } else {
@@ -25,8 +26,8 @@ const deleteCategoriaDB = async (codigo) => {
 
 const addCategoriaDB = async (objeto) => {
     try {
-        const { nome, descricao } = objeto;
-        await pool.query(`INSERT INTO categorias (nome, descricao) VALUES ($1, $2)`, [nome, descricao]);        
+        const { nome } = objeto;
+        await pool.query(`INSERT INTO categorias (nome) VALUES ($1)`, [nome]);        
     } catch (err) {
         throw "Erro ao inserir a categoria: " + err;
     }
@@ -34,8 +35,9 @@ const addCategoriaDB = async (objeto) => {
 
 const updateCategoriaDB = async (objeto) => {
     try {
-        const { codigo, nome, descricao } = objeto;        
-        const results = await pool.query(`UPDATE categorias SET nome = $2, descricao = $3 WHERE codigo = $1`, [codigo, nome, descricao]);
+        const { codigo, nome } = objeto;        
+        const results = await pool.query(`UPDATE categorias set nome = $2
+        WHERE codigo = $1`, [codigo, nome]);
         if (results.rowCount == 0) {
             throw `Nenhum registro encontrado com o código ${codigo} para ser alterado`;
         }
@@ -46,12 +48,13 @@ const updateCategoriaDB = async (objeto) => {
 
 const getCategoriaPorCodigoDB = async (codigo) => {
     try {
-        const results = await pool.query(`SELECT * FROM categorias WHERE codigo = $1`, [codigo]);
+        const results = await pool.query(`SELECT * FROM categorias
+        WHERE codigo = $1`, [codigo]);
         if (results.rowCount == 0) {
             throw `Nenhum registro encontrado com o código ${codigo}`;
         } else {
             const categoria = results.rows[0];
-            return new Categoria(categoria.codigo, categoria.nome, categoria.descricao);
+            return new Categoria(categoria.codigo, categoria.nome);
         }
     } catch (err) {
         throw "Erro ao recuperar a categoria: " + err;
@@ -59,5 +62,8 @@ const getCategoriaPorCodigoDB = async (codigo) => {
 }
 
 module.exports = {
-    getCategoriasDB, addCategoriaDB, updateCategoriaDB, deleteCategoriaDB, getCategoriaPorCodigoDB
+    getCategoriasDB, addCategoriaDB, updateCategoriaDB, deleteCategoriaDB,
+    getCategoriaPorCodigoDB
 }
+
+
