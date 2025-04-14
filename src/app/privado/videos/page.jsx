@@ -30,40 +30,43 @@ href={`/privado/video/${0}/formulario`}>
 <Table striped bordered hover>
 <thead>
 <tr>
-<th style={{ textAlign: 'center' }}>Ações</th>
-<th>Código</th>
-<th>Título</th>
-<th>Categoria</th>
-<th>Tipo</th>
-<th>Duração</th>
+  <th style={{ textAlign: 'center' }}>Ações</th>
+  <th>Capa</th>
+  <th>Código</th>
+  <th>Título</th>
+  <th>Categoria</th>
+  <th>Tipo</th>
+  <th>Duração</th>
 </tr>
 </thead>
 <tbody>
 {videos.map((video) => (
-<tr key={video.id}>
-<td align="center">
-{/* Link para editar o vídeo */}
-<Link className="btn btn-info"
-href={`/privado/video/${video.id}/formulario`}>
-<i className="bi bi-pencil-square"></i>
-</Link>
-{/* Formulário para deletar o vídeo */}
-<form
-action={deleteVideo.bind(null, video.id)}
-className='d-inline'>
-<Button variant="danger" type='submit'>
-<i className="bi bi-trash"></i>
-</Button>
-</form>
-</td>
-<td>{video.id}</td>
-<td>{video.titulo}</td>
-<td>{video.categoria_id}</td>
-<td>{video.tipo}</td>
-<td>{video.duracao} min</td>
-</tr>
- ))}
+  <tr key={video.id}>
+    <td align="center">
+      <Link className="btn btn-info" href={`/privado/videos/${video.id}/formulario`}>
+        <i className="bi bi-pencil-square"></i>
+      </Link>
+      <form action={deleteVideo.bind(null, video.id)} className='d-inline'>
+        <Button variant="danger" type='submit'>
+          <i className="bi bi-trash"></i>
+        </Button>
+      </form>
+      <Link className="btn btn-secondary ms-1" href={`/privado/video/${video.id}`}>
+        <i className="bi bi-eye"></i>
+      </Link>
+    </td>
+    <td>
+      <img src={video.capa_filme} alt="Capa" style={{ width: '100px', height: 'auto' }} />
+    </td>
+    <td>{video.id}</td>
+    <td>{video.titulo}</td>
+    <td>{video.categoria_id}</td>
+    <td>{video.tipo}</td>
+    <td>{video.duracao} min</td>
+  </tr>
+))}
 </tbody>
+
 </Table>
 </Suspense>
 </div>
