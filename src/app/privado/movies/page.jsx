@@ -1,15 +1,12 @@
-import Table from 'react-bootstrap/Table';
 import { Button } from 'react-bootstrap';
-import { redirect } from 'next/navigation';
-import Link from 'next/link';
 import { Suspense } from 'react';
-import Loading from '@/componentes/comuns/Loading';
+import Link from 'next/link';
 import { getVideosDB, deleteVideoDB } from '@/bd/usecases/videoUseCases';
+import Loading from '@/componentes/comuns/Loading';
 
 export const dynamic = 'force-dynamic';
 
 export default async function Video() {
-
     const videos = await getVideosDB();
 
     const deleteVideo = async (id) => {
@@ -20,56 +17,47 @@ export default async function Video() {
             console.log('Erro: ' + err);
             throw new Error('Erro: ' + err);
         }
-        redirect('/privado/movies'); 
     }
 
     return (
-        <div style={{ padding: '20px' }}>
+        <div className="container py-4">
             <Suspense fallback={<Loading />}>
-                <h1>Vídeos</h1>
-                <Link className='btn btn-primary'
-                    href={`/privado/video/${0}/formulario`}>
-                    <i className='bi bi-file-earmark-plus'></i> Novo
-                </Link>
-                <Table striped bordered hover>
-                    <thead>
-                        <tr>
-                            <th style={{ textAlign: 'center' }}>Ações</th>
-                            <th>Código</th>
-                            <th>Título</th>
-                            <th>Categoria</th>
-                            <th>Tipo</th>
-                            <th>Duração</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {videos.map((video) => (
-                            <tr key={video.id}>
-                                <td align="center">
-                                    {/* Link para editar o vídeo */}
-                                    <Link className="btn btn-info"
-                                        href={`/privado/video/${video.id}/formulario`}>
-                                        <i className="bi bi-pencil-square"></i>
-                                    </Link>
-                                    {/* Formulário para deletar o vídeo */}
-                                    <form
-                                        action={deleteVideo.bind(null, video.id)}
-                                        className='d-inline'>
-                                        <Button variant="danger" type='submit'>
-                                            <i className="bi bi-trash"></i>
+                <div className="d-flex justify-content-between align-items-center mb-4">
+                    <h1 className="text-white">Vídeos</h1>
+                    <Link href={`/privado/video/${0}/formulario`} className="btn btn-danger">
+                        <i className="bi bi-file-earmark-plus"></i> Novo Vídeo
+                    </Link>
+                </div>
+
+                <div className="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
+                    {videos.map((video) => (
+                        <div key={video.id} className="col">
+                            <div className="card bg-dark text-white h-100">
+                                <img
+                                    src={video.capa_filme}
+                                    className="card-img-top"
+                                    alt={video.titulo}
+                                    style={{ objectFit: 'cover', height: '300px' }}
+                                />
+                                <div className="card-body d-flex flex-column">
+                                    <h5 className="card-title">{video.titulo}</h5>
+                                    <div className="d-flex justify-content-between mt-auto">
+                                        <Link href={`/privado/video/${video.id}/formulario`} className="btn btn-info">
+                                            Editar
+                                        </Link>
+                                        <Button
+                                            variant="danger"
+                                            onClick={() => deleteVideo(video.id)}
+                                        >
+                                            Excluir
                                         </Button>
-                                    </form>
-                                </td>
-                                <td>{video.id}</td>
-                                <td>{video.titulo}</td>
-                                <td>{video.categoria_id}</td>
-                                <td>{video.tipo}</td>
-                                <td>{video.duracao} min</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </Table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </Suspense>
         </div>
-    )
+    );
 }
