@@ -29,7 +29,7 @@ export default async function Categoria() {
             <Suspense fallback={<Loading />}>
                 <h1>Categorias</h1>
                 <Link className='btn btn-primary'
-                    href={`/private/categories/${0}/form`}>
+                    href={`/private/categories/${0}/formulario`}>
                     <i className='bi bi-file-earmark-plus'></i> Novo
                 </Link>
                 <Table striped bordered hover>
@@ -47,7 +47,7 @@ export default async function Categoria() {
                             <tr key={categoria.codigo}>
                                 <td align="center">
                                     <Link className="btn btn-info"
-                                        href={`/private/categories/${categoria.codigo}/form`}>
+                                        href={`/private/categories/${categoria.codigo}/formulario`}>
                                         <i className="bi bi-pencil-square"></i>
                                     </Link>
                                     <form

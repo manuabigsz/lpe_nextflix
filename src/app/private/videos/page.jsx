@@ -26,13 +26,14 @@ export default async function Videos() {
         <div style={{ padding: '20px' }}>
             <Suspense fallback={<Loading />}>
                 <h1>Vídeos</h1>
-                <Link className='btn btn-primary' href={`/private/videos/novo`}>
+                <Link className='btn btn-primary' href={`/private/videos/0/form`}>
                     <i className='bi bi-file-earmark-plus'></i> Novo
                 </Link>
                 <Table striped bordered hover>
                     <thead>
                         <tr>
                             <th style={{ textAlign: 'center' }}>Ações</th>
+                            <th>Capa</th>
                             <th>ID</th>
                             <th>Título</th>
                             <th>Categoria</th>
@@ -57,9 +58,23 @@ export default async function Videos() {
                                         </Button>
                                     </form>
                                 </td>
+
+                                {/* Imagem da capa */}
+                                <td>
+                                    {video.capa_video ? (
+                                        <img
+                                            src={video.capa_video}
+                                            alt={`Capa de ${video.titulo}`}
+                                            style={{ width: '100px', height: 'auto', objectFit: 'cover' }}
+                                        />
+                                    ) : (
+                                        <span>Sem capa</span>
+                                    )}
+                                </td>
+
                                 <td>{video.id}</td>
                                 <td>{video.titulo}</td>
-                                <td>{video.categoria_id}</td> {/* A categoria pode ser substituída por uma busca do nome da categoria, se necessário */}
+                                <td>{video.categoria_id}</td>
                                 <td>{video.tipo}</td>
                                 <td>{video.duracao}</td>
                                 <td>{new Date(video.data_upload).toLocaleString()}</td>
@@ -67,6 +82,7 @@ export default async function Videos() {
                         ))}
                     </tbody>
                 </Table>
+
             </Suspense>
         </div>
     );

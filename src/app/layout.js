@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-icons/font/bootstrap-icons.css'
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import Menu from '@/components/Menu';
 
 export const metadata = {
@@ -8,11 +8,28 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+
+
   return (
     <html lang="en">
-      <body>
+      <body style={{
+        backgroundColor: '#141414',
+        color: '#fff',
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        overflowX: 'hidden',
+      }}>
         <Menu />
-        {children}
+        <main style={{
+          flexGrow: 1,
+          backgroundImage: 'url("/images/netflix-background.jpg")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center center',
+          padding: '20px',
+        }}>
+          {children}
+        </main>
       </body>
     </html>
   );

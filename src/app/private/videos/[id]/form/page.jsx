@@ -1,78 +1,186 @@
-// import { useEffect, useState } from 'react';
-// import { useRouter } from 'next/router';
-// import { getVideoPorIdDB, updateVideoDB } from '@/bd/usecases/videoUseCase';
-// import { Button, Form } from 'react-bootstrap';
+import { getVideoPorIdDB, addVideoDB, updateVideoDB } from '@/bd/usecases/videoUseCase';
+import { getCategoriasDB } from '@/bd/usecases/categoriaUseCase';
+import CampoEntradaFloating from '@/components/comuns/CampoEntradaFloating';
+import { Suspense } from 'react';
+import Loading from '@/components/comuns/Loading';
+import { redirect } from 'next/navigation';
 
-// export default function EditarVideo({ params }) {
-//     const router = useRouter();
-//     const [video, setVideo] = useState(null);
+const FormularioPage = async ({ params }) => {
+    const { id } = params;
+    const videoId = id;
 
-//     useEffect(() => {
-//         const fetchData = async () => {
-//             const videoData = await getVideoPorIdDB(params.id);
-//             setVideo(videoData);
-//         };
-//         fetchData();
-//     }, [params.id]);
 
-//     const handleSubmit = async (event) => {
-//         event.preventDefault();
-//         const formData = new FormData(event.target);
-//         const updatedVideo = {
-//             id: params.id,
-//             titulo: formData.get('titulo'),
-//             descricao: formData.get('descricao'),
-//             url_video: formData.get('url_video'),
-//             categoria_id: formData.get('categoria_id'),
-//             duracao: formData.get('duracao'),
-//             capa_video: formData.get('capa_video'),
-//             tipo: formData.get('tipo'),
-//         };
+    let categorias = [];
+    try {
+        categorias = await getCategoriasDB();
+    } catch (error) {
+        console.error('Erro ao carregar categorias:', error);
+    }
 
-//         try {
-//             await updateVideoDB(updatedVideo);
-//             router.push('/private/videos');
-//         } catch (err) {
-//             console.log('Erro ao atualizar o vídeo: ' + err);
-//         }
-//     };
+    let video = {
+        id: '',
+        titulo: '',
+        descricao: '',
+        url_video: '',
+        categoria_id: '',
+        duracao: '',
+        capa_video: '',
+        tipo: '',
+    };
 
-//     if (!video) return <p>Carregando...</p>;
+    if (videoId) {
+        try {
+            video = await getVideoPorIdDB(videoId);
+        } catch (error) {
+            console.error('Erro ao buscar vídeo:', error);
+        }
+    }
 
-//     return (
-//         <div style={{ padding: '20px' }}>
-//             <h1>Editar Vídeo</h1>
-//             <Form onSubmit={handleSubmit}>
-//                 <Form.Group>
-//                     <Form.Label>Título</Form.Label>
-//                     <Form.Control type="text" name="titulo" defaultValue={video.titulo} />
-//                 </Form.Group>
-//                 <Form.Group>
-//                     <Form.Label>Descrição</Form.Label>
-//                     <Form.Control type="text" name="descricao" defaultValue={video.descricao} />
-//                 </Form.Group>
-//                 <Form.Group>
-//                     <Form.Label>URL do Vídeo</Form.Label>
-//                     <Form.Control type="text" name="url_video" defaultValue={video.url_video} />
-//                 </Form.Group>
-//                 <Form.Group>
-//                     <Form.Label>Código da Categoria</Form.Label>
-//                     <Form.Control type="text" name="categoria_id" defaultValue={video.categoria_id} />
-//                 </Form.Group>
-//                 <Form.Group>
-//                     <Form.Label>Duração</Form.Label>
-//                     <Form.Control type="number" name="duracao" defaultValue={video.duracao} />
-//                 </Form.Group>
-//                 <Form.Group>
-//                     <Form.Label>Capa do Vídeo</Form.Label>
-//                     <Form.Control type="text" name="capa_video" defaultValue={video.capa_video} />
-//                 </Form.Group>
-//                 <Form.Group>
-//                     <Form.Label>Tipo</Form.Label>
-//                     <Form.Control type="text" name="tipo" defaultValue={video.tipo} />
-//                 </Form.Group>
-//                 <Button variant="primary" type="submit">Salvar</Button>
-//             </Form>
-//         </div>
-//     );
-// }
+    const salvarVideo = async (formData) => {
+        'use server';
+        const objeto = {
+            id: formData.get('id'),
+            titulo: formData.get('titulo'),
+            descricao: formData.get('descricao'),
+            url_video: formData.get('url_video'),
+            categoria_id: formData.get('categoria_id'),
+            duracao: formData.get('duracao'),
+            capa_video: formData.get('capa_video'),
+            tipo: formData.get('tipo'),
+        };
+
+        try {
+            if (objeto.id === '') {
+                await addVideoDB(objeto);
+            } else {
+                await updateVideoDB(objeto);
+            }
+        } catch (err) {
+            console.error('Erro ao salvar vídeo:', err);
+            throw new Error('Erro: ' + err);
+        }
+
+        redirect('/private/videos');
+    };
+
+    return (
+        <div>
+            <Suspense fallback={<Loading />}>
+                <div style={{ textAlign: 'center' }}>
+                    <h2>Vídeo {videoId ? videoId : 'Novo'}</h2>
+                </div>
+                <form action={salvarVideo}>
+                    <div className="container">
+                        <div className="row justify-content-center">
+                            <div className="col-12 col-md-6">
+
+                                <CampoEntradaFloating
+                                    id="txtId"
+                                    label="ID"
+                                    name="id"
+                                    value={video.id}
+                                    tipo="text"
+                                    readOnly={true}
+                                    required={false}
+                                />
+
+
+                                <CampoEntradaFloating
+                                    id="txtTitulo"
+                                    label="Título"
+                                    name="titulo"
+                                    value={video.titulo}
+                                    tipo="text"
+                                    readOnly={false}
+                                    required={true}
+                                />
+
+
+                                <CampoEntradaFloating
+                                    id="txtDescricao"
+                                    label="Descrição"
+                                    name="descricao"
+                                    value={video.descricao}
+                                    tipo="text"
+                                    readOnly={false}
+                                    required={true}
+                                />
+
+
+                                <CampoEntradaFloating
+                                    id="txtUrlVideo"
+                                    label="URL do Vídeo"
+                                    name="url_video"
+                                    value={video.url_video}
+                                    tipo="text"
+                                    readOnly={false}
+                                    required={true}
+                                />
+
+                                <div className="form-group">
+                                    <label htmlFor="txtCategoriaId">Categoria</label>
+                                    <select
+                                        id="txtCategoriaId"
+                                        name="categoria_id"
+                                        value={video.categoria_id}
+                                        className="form-control"
+                                        required
+                                    >
+                                        <option value="">Selecione uma categoria</option>
+                                        {categorias.map((categoria) => (
+                                            <option key={categoria.id} value={categoria.id}>
+                                                {categoria.nome}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                <br></br>
+                                <CampoEntradaFloating
+                                    id="txtDuracao"
+                                    label="Duração (segundos)"
+                                    name="duracao"
+                                    value={video.duracao}
+                                    tipo="number"
+                                    readOnly={false}
+                                    required={true}
+                                />
+
+                                {/* Campo URL da Capa */}
+                                <CampoEntradaFloating
+                                    id="txtCapaVideo"
+                                    label="URL da Capa"
+                                    name="capa_video"
+                                    value={video.capa_video}
+                                    tipo="text"
+                                    readOnly={false}
+                                    required={true}
+                                />
+
+                                {/* Campo Tipo */}
+                                <CampoEntradaFloating
+                                    id="txtTipo"
+                                    label="Tipo"
+                                    name="tipo"
+                                    value={video.tipo}
+                                    tipo="text"
+                                    readOnly={false}
+                                    required={true}
+                                />
+
+                                {/* Botão Salvar */}
+                                <div className="form-group text-center mt-3">
+                                    <button type="submit" className="btn btn-success">
+                                        Salvar <i className="bi bi-save"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </Suspense>
+        </div>
+    );
+};
+
+export default FormularioPage;
