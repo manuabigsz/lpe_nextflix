@@ -1,6 +1,6 @@
 import { withAuth } from "next-auth/middleware";
 
-export const config = { matcher: ["/privado/", "/privado/:path*"] };
+export const config = { matcher: ["/private/", "/private/:path*"] };
 
 export default withAuth({});
 
