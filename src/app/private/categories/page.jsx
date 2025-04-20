@@ -1,11 +1,10 @@
 import Table from 'react-bootstrap/Table';
 import { Button } from 'react-bootstrap';
-
+import { getCategoriasDB, deleteCategoriaDB } from '@/bd/usecases/categoriaUseCase';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { Suspense } from 'react';
-import Loading from '@/componentes/comuns/Loading';
-import { getCategoriasDB,deleteCategoriaDB } from '@/bd/usecases/categoriaUseCases';
+import Loading from '@/components/comuns/Loading';
 
 export const dynamic = 'force-dynamic';
 
@@ -21,7 +20,7 @@ export default async function Categoria() {
             console.log('Erro: ' + err);
             throw new Error('Erro: ' + err);
         }
-        redirect('/privado/categoria');
+        redirect('/private/categories');
     }
 
     return (
@@ -30,7 +29,7 @@ export default async function Categoria() {
             <Suspense fallback={<Loading />}>
                 <h1>Categorias</h1>
                 <Link className='btn btn-primary'
-                    href={`/privado/categoria/${0}/formulario`}>
+                    href={`/private/categories/${0}/form`}>
                     <i className='bi bi-file-earmark-plus'></i> Novo
                 </Link>
                 <Table striped bordered hover>
@@ -48,7 +47,7 @@ export default async function Categoria() {
                             <tr key={categoria.codigo}>
                                 <td align="center">
                                     <Link className="btn btn-info"
-                                        href={`/privado/categoria/${categoria.codigo}/formulario`}>
+                                        href={`/private/categories/${categoria.codigo}/form`}>
                                         <i className="bi bi-pencil-square"></i>
                                     </Link>
                                     <form

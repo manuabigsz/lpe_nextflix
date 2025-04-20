@@ -1,5 +1,5 @@
 {
-  "name": "nextflix-lpe",
+  "name": "lpe_trabalho01",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,7 +11,7 @@
   "dependencies": {
     "bootstrap": "^5.3.5",
     "bootstrap-icons": "^1.11.3",
-    "next": "15.3.0",
+    "next": "15.3.1",
     "pg": "^8.14.1",
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.9",

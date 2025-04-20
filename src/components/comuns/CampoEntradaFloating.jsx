@@ -8,11 +8,11 @@ export default function CampoEntradaFloating(props) {
             <FloatingLabel controlId={props.id} label={props.label}>
                 <Form.Control type={props.tipo}
                     name={props.name}
-                    defaultValue={props.value} 
+                    defaultValue={props.value}
                     readOnly={props.readOnly}
-                    required={props.required}/>
+                    required={props.required} />
             </FloatingLabel>
-            <br/>
+            <br />
         </div>
     )
 }

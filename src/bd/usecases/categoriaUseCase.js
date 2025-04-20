@@ -4,7 +4,7 @@ const Categoria = require('../entities/Categoria');
 const getCategoriasDB = async () => {
     try {
         const { rows } = await pool.query(`SELECT * FROM categorias ORDER BY nome`);
-        return rows.map((categoria) => new Categoria(categoria.codigo, categoria.nome, categoria.descricao));
+        return rows.map((categoria) => new Categoria(categoria.codigo, categoria.nome));
     } catch (err) {
         throw "Erro: " + err;
     }
@@ -27,7 +27,7 @@ const deleteCategoriaDB = async (codigo) => {
 const addCategoriaDB = async (objeto) => {
     try {
         const { nome } = objeto;
-        await pool.query(`INSERT INTO categorias (nome) VALUES ($1)`, [nome]);        
+        await pool.query(`INSERT INTO categorias (nome) VALUES ($1)`, [nome]);
     } catch (err) {
         throw "Erro ao inserir a categoria: " + err;
     }
@@ -35,7 +35,7 @@ const addCategoriaDB = async (objeto) => {
 
 const updateCategoriaDB = async (objeto) => {
     try {
-        const { codigo, nome } = objeto;        
+        const { codigo, nome } = objeto;
         const results = await pool.query(`UPDATE categorias set nome = $2
         WHERE codigo = $1`, [codigo, nome]);
         if (results.rowCount == 0) {
@@ -65,5 +65,3 @@ module.exports = {
     getCategoriasDB, addCategoriaDB, updateCategoriaDB, deleteCategoriaDB,
     getCategoriaPorCodigoDB
 }
-
-
