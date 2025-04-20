@@ -52,7 +52,7 @@ function Menu() {
                             <Link className="dropdown-item" href={`/private/categories`}>
                                 <span className="text-white">Categorias</span>
                             </Link>
-                            <Link className="dropdown-item" href={`/private/video`}>
+                            <Link className="dropdown-item" href={`/private/videos`}>
                                 <span className="text-white">Vídeos</span>
                             </Link>
                         </NavDropdown>

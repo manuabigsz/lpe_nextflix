@@ -1,6 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Menu from '@/components/Menu';
+import { NextAuthProvider } from "./providers/NextAuthProvider";
 
 export const metadata = {
   title: "Nextflix",
@@ -20,16 +21,17 @@ export default function RootLayout({ children }) {
         flexDirection: 'column',
         overflowX: 'hidden',
       }}>
-        <Menu />
-        <main style={{
-          flexGrow: 1,
-          backgroundImage: 'url("/images/netflix-background.jpg")',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center center',
-          padding: '20px',
-        }}>
-          {children}
-        </main>
+        <NextAuthProvider><Menu />
+          <main style={{
+            flexGrow: 1,
+            backgroundImage: 'url("/images/netflix-background.jpg")',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center center',
+            padding: '20px',
+          }}>
+            {children}
+          </main></NextAuthProvider>
+
       </body>
     </html>
   );
