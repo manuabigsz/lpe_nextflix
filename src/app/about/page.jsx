@@ -1,4 +1,4 @@
-export default function Sobre() {
+export default function About() {
     return (
         <>
             <h1>Sobre o sistema</h1>

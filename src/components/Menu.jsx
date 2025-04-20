@@ -25,7 +25,11 @@ function Menu() {
     }, []);
 
     return (
-        <Navbar expand="lg" className={`navbar ${scrolling ? 'scrolled' : ''}`}>
+        <Navbar
+            expand="lg"
+            className={`navbar ${scrolling ? 'scrolled' : ''}`}
+            style={{ backgroundColor: scrolling ? '#141414' : 'transparent' }}
+        >
             <Container>
                 <Link className="navbar-brand" href={`/`}>
                     <img
@@ -37,18 +41,22 @@ function Menu() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Link className="nav-link" href={`/`}>
+                        <Link className="nav-link text-white" href={`/`}>
                             Home
                         </Link>
-                        <NavDropdown title="Manutenções" id="basic-nav-dropdown">
-                            <Link className="dropdown-item" href={`/privado/categoria`}>
-                                Categorias
+                        <NavDropdown
+                            title={<span className="text-white">Manutenções</span>}
+                            id="basic-nav-dropdown"
+                            menuVariant="dark" // deixa o menu escuro
+                        >
+                            <Link className="dropdown-item" href={`/private/categories`}>
+                                <span className="text-white">Categorias</span>
                             </Link>
-                            <Link className="dropdown-item" href={`/privado/produto`}>
-                                Produtos
+                            <Link className="dropdown-item" href={`/private/video`}>
+                                <span className="text-white">Vídeos</span>
                             </Link>
                         </NavDropdown>
-                        <Link className="nav-link" href={`/sobre`}>
+                        <Link className="nav-link text-white" href={`/about`}>
                             Sobre
                         </Link>
                     </Nav>
