@@ -1,36 +1,127 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎬 LPE Nextflix
 
-## Getting Started
+Uma plataforma de streaming inspirada na Netflix, desenvolvida com **Next.js** para fins acadêmicos. Os usuários podem visualizar filmes e séries, com autenticação, controle de vídeos e organização por categorias.
 
-First, run the development server:
+---
+
+## 🔗 Acesse o Projeto
+
+▶️ **Site em Produção:**  
+https://lpe-nextflix-99z529utu-manuabigszs-projects.vercel.app/
+
+---
+
+## 🧠 Tecnologias Utilizadas
+
+- [Next.js](https://nextjs.org/) — Framework React full-stack
+- [React Bootstrap](https://react-bootstrap.github.io/) — Componentes visuais
+- [NextAuth.js](https://next-auth.js.org/) — Autenticação
+- [PostgreSQL](https://www.postgresql.org/) — Banco de dados relacional
+- [Prisma ORM](https://www.prisma.io/) — Mapeamento objeto-relacional
+- [Render](https://render.com/) — Hospedagem do banco de dados
+- [Vercel](https://vercel.com/) — Deploy do frontend
+
+---
+
+## 📁 Estrutura do Projeto
+
+```
+├── /app                # Rotas e páginas
+├── /components         # Componentes reutilizáveis (menu, sliders etc.)
+├── /bd                 # Casos de uso e integrações com o banco de dados
+├── /lib                # Configurações (ex: autenticação)
+├── /public             # Arquivos estáticos
+├── /styles             # Estilizações globais
+└── README.md
+```
+
+---
+
+## ⚙️ Configuração Local
+
+### 1. Clone o repositório
+
+```bash
+git clone https://github.com/seu-usuario/lpe-nextflix.git
+cd lpe-nextflix
+```
+
+### 2. Instale as dependências
+
+```bash
+npm install
+# ou
+yarn
+```
+
+### 3. Configure as variáveis de ambiente
+
+Crie um arquivo `.env.local` com:
+
+```env
+DATABASE_URL="sua_string_do_render"
+NEXTAUTH_SECRET="um_segredo_seguro"
+NEXTAUTH_URL="http://localhost:3000"
+```
+
+### 4. Migrate o banco de dados
+
+```bash
+npx prisma migrate dev
+```
+
+### 5. Rode o servidor local
 
 ```bash
 npm run dev
-# or
+# ou
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abra em [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ✅ Funcionalidades
 
-## Learn More
+- Login e cadastro com NextAuth
+- Menu responsivo com links dinâmicos
+- Visualização de vídeos organizados por tipo
+- Painel privado para gerenciar categorias e vídeos (admin)
+- Scroll dinâmico no menu
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📦 Produção
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- 🔁 **Backend:** Banco de dados PostgreSQL no [Render](https://render.com)
+- 🌐 **Frontend:** Aplicação Next.js hospedada na [Vercel](https://vercel.com)
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 👨‍💻 Autor
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+<p>
+    <img 
+      align=left 
+      margin=10 
+      width=80 
+      src="https://avatars.githubusercontent.com/u/80135269?v=4"
+    />
+    <p>&nbsp&nbsp&nbspManuela Bertella Ossanes<br>
+    &nbsp&nbsp&nbsp
+    <a href="https://github.com/manuabigsz">
+    GitHub</a>&nbsp;|&nbsp;
+    <a href="https://www.linkedin.com/in/manuela-bertella-ossanes-690166204/">LinkedIn</a>
+&nbsp;|&nbsp;
+    <a href="https://www.instagram.com/manuossz/">
+    Instagram</a>
+&nbsp;|&nbsp;</p>
+</p>
+<br/><br/>
+<p>
+---
+
+## 📄 Licença
+
+Este projeto é acadêmico e de uso livre para fins educacionais.
