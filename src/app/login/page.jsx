@@ -6,7 +6,7 @@ import { signIn } from "next-auth/react";
 export default async function Login({ searchParams }) {
 
     const handleLogin = async (formData) => {
-        console.log('formData: ' + JSON.stringify(formData));
+
         await signIn("credentials", {
             email: formData.get('email'),
             senha: formData.get('senha'),

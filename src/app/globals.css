@@ -24,6 +24,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 16px rgba(255, 255, 255, 0.1);
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -42,54 +51,83 @@ a {
 }
 
 
-.navbar {
-  background-color: transparent;
+.netflix-navbar {
+  background: transparent;
   transition: background-color 0.3s ease;
-  padding: 10px 20px;
+  padding: 0.5rem 1rem;
 }
 
-.navbar.scrolled {
-  background-color: #141414;
+.netflix-navbar.scrolled {
+  background: rgba(20, 20, 20, 0.95) !important;
+  backdrop-filter: blur(5px);
 }
 
-.navbar .navbar-brand {
-  color: white;
-  font-size: 1.5rem;
-  font-weight: bold;
+.netflix-navbar .navbar-brand img {
+  transition: transform 0.2s;
 }
 
-.navbar .nav-link {
-  color: white !important;
-  font-size: 1.1rem;
-  padding: 10px 15px;
+.netflix-navbar .navbar-brand img:hover {
+  transform: scale(1.05);
 }
 
-.navbar .nav-link:hover {
+.netflix-navbar .nav-link {
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.netflix-navbar .nav-link:hover {
   color: #e50914 !important;
+
 }
 
-.navbar .dropdown-item {
-  color: white;
+.netflix-navbar .dropdown-menu {
+  background: rgba(20, 20, 20, 0.95);
+  border: none;
+  margin-top: 0;
 }
 
-.navbar .dropdown-item:hover {
-  background-color: #333;
-  color: #e50914;
+.netflix-navbar .dropdown-item {
+  color: #fff;
+  font-size: 0.85rem;
 }
 
-.navbar-toggler {
-  border-color: white;
+.netflix-navbar .dropdown-item:hover {
+  background: #e50914;
+  color: #fff !important;
 }
 
-.navbar-toggler-icon {
-  background-color: white;
+.btn-netflix-red {
+  background: #e50914;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
 }
 
-.navbar.scrolled {
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+.btn-netflix-red:hover {
+  background: #f40612;
+  color: #fff;
 }
 
-.navbar-brand img {
-  height: 40px;
-  object-fit: contain;
+.navbar-text {
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+@media (max-width: 991px) {
+  .netflix-navbar .nav-link {
+    padding: 0.5rem 1rem;
+  }
+
+  .netflix-navbar .dropdown-menu {
+    background: #141414;
+  }
+
+  .navbar-text {
+    display: none;
+
+  }
 }

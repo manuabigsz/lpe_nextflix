@@ -32,7 +32,6 @@ export default function Cadastro() {
         setError('');
         setSuccess('');
 
-        console.log('[Frontend] Enviando dados para cadastro:', formData);
 
         try {
             const res = await fetch('/api/register', {
@@ -44,7 +43,6 @@ export default function Cadastro() {
             });
 
             const text = await res.text();
-            console.log('[Frontend] Resposta bruta:', text);
 
             let data;
             try {
@@ -54,7 +52,6 @@ export default function Cadastro() {
                 throw new Error('Resposta inesperada do servidor');
             }
 
-            console.log('[Frontend] JSON recebido:', data);
 
             if (!res.ok) throw new Error(data.error || 'Erro no cadastro');
 

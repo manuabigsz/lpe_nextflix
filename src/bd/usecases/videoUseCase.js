@@ -13,8 +13,6 @@ const getVideosDB = async () => {
 
 const getVideoPorIdDB = async (id) => {
     try {
-        console.log('recebeu o id')
-        console.log(id)
         const results = await pool.query('SELECT * FROM videos WHERE id = $1', [id]);
         if (results.rowCount === 0) {
             throw `Nenhum registro encontrado com o ID ${id}`;

@@ -21,14 +21,18 @@ export default function RootLayout({ children }) {
         flexDirection: 'column',
         overflowX: 'hidden',
       }}>
-        <NextAuthProvider><Menu />
+        <NextAuthProvider>
+
+          <Menu />
           <main style={{
             flexGrow: 1,
             backgroundImage: 'url("/images/netflix-background.jpg")',
             backgroundSize: 'cover',
             backgroundPosition: 'center center',
             padding: '20px',
+            paddingTop: '80px', // ajuste conforme a altura real do Menu
           }}>
+
             {children}
           </main></NextAuthProvider>
 

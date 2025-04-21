@@ -1,12 +1,13 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import { autenticaUsuarioDB } from "@/bd/usecases/usuarioUseCases";
+
 export const authOptions = {
     session: {
         strategy: "jwt",
-        maxAge: 1800, // tempo em segundos - 30 minutos
+        maxAge: 1800,
     },
     pages: {
-        signIn: '/login', //página de login padrão
+        signIn: '/login',
     },
     providers: [
         CredentialsProvider({
@@ -34,45 +35,51 @@ export const authOptions = {
                 if (!usuario) {
                     return null;
                 }
-                // colocando o tipo como informação adicionar ao user padrão da sessão
                 return {
                     tipo: usuario.tipo ?? "user",
                     id: usuario.email,
                     email: usuario.email,
                     name: usuario.nome,
+                    plano: usuario.plano || 'gratis',
                     randomKey: parseInt(Math.random() * 9999)
                 }
             },
         }),
     ],
     callbacks: {
-        session: ({ session, token }) => {
-            console.log("Session Callback", { session, token });
-            // Adicionando o tipo do usuário no user armazenado pela sessão
-            session.user.tipo = token.tipo;
+
+        async jwt({ token, user, trigger, session }) {
+
+            if (user) {
+                token.name = user.name;
+                token.plano = user.plano;
+                token.tipo = user.tipo;
+                token.id = user.id;
+                token.randomKey = user.randomKey;
+            }
+
+            if (trigger === 'update' && session?.user) {
+
+                if (session.user.name) token.name = session.user.name;
+                if (session.user.plano) token.plano = session.user.plano;
+            }
+
+            return token;
+        },
+
+        async session({ session, token }) {
             return {
                 ...session,
                 user: {
                     ...session.user,
                     id: token.id,
-                    name: session.user.name,
+                    name: token.name,
+                    email: token.email,
+                    plano: token.plano,
+                    tipo: token.tipo,
                     randomKey: token.randomKey,
                 },
             };
-        },
-        jwt: ({ token, user }) => {
-            console.log("JWT Callback", { token, user });
-            if (user) {
-                const u = user;
-                // Adicionando o tipo do usuário no token armazenado pela sessão
-                token.tipo = user.tipo;
-                return {
-                    ...token,
-                    id: u.id,
-                    randomKey: u.randomKey,
-                };
-            }
-            return token;
-        },
+        }
     },
 };

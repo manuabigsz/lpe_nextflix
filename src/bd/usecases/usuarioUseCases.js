@@ -4,7 +4,6 @@ const Usuario = require('../entities/Usuario');
 const autenticaUsuarioDB = async (objeto) => {
     try {
         const { email, senha } = objeto;
-        console.log('Email: ' + email + " Senha: " + senha);
 
         const results = await pool.query(
             `SELECT * FROM usuarios WHERE email = $1 AND senha = $2`,
@@ -31,7 +30,6 @@ const cadastraUsuarioDB = async (objeto) => {
     try {
         const { nome, email, senha, plano } = objeto;
 
-        console.log('[DB] Iniciando cadastro no banco de dados:', objeto);
 
         const results = await pool.query(
             `INSERT INTO usuarios (nome, email, senha, plano, data_cadastro)
@@ -41,7 +39,6 @@ const cadastraUsuarioDB = async (objeto) => {
         );
 
         const usuario = results.rows[0];
-        console.log('[DB] Cadastro concluído:', usuario);
 
         return new Usuario(
             usuario.id,
@@ -51,10 +48,42 @@ const cadastraUsuarioDB = async (objeto) => {
             usuario.data_cadastro
         );
     } catch (err) {
-        console.error('[DB] Erro no cadastro:', err);
         throw "Erro ao cadastrar o usuário: " + err;
     }
 };
 
+const updateUsuarioDB = async (objeto) => {
+    try {
+        const { email, nome, senha, plano } = objeto;
 
-module.exports = { autenticaUsuarioDB, cadastraUsuarioDB };
+        const query = senha
+            ? `UPDATE usuarios SET nome = $1, senha = $2, plano = $3 WHERE email = $4 RETURNING *`
+            : `UPDATE usuarios SET nome = $1, plano = $2 WHERE email = $3 RETURNING *`;
+
+        const values = senha
+            ? [nome, senha, plano, email]
+            : [nome, plano, email];
+
+        const results = await pool.query(query, values);
+
+
+        if (results.rowCount === 0) {
+            throw 'Usuário não encontrado para atualização';
+        }
+
+        const usuario = results.rows[0];
+        return new Usuario(
+            usuario.id,
+            usuario.nome,
+            usuario.email,
+            usuario.plano,
+            usuario.data_cadastro
+        );
+    } catch (err) {
+        console.error('[DB] Erro ao atualizar usuário:', err);
+        throw 'Erro ao atualizar o usuário: ' + err;
+    }
+};
+
+module.exports = { autenticaUsuarioDB, cadastraUsuarioDB, updateUsuarioDB };
+

@@ -17,7 +17,7 @@ export default async function Categoria() {
         try {
             await deleteCategoriaDB(codigo);
         } catch (err) {
-            console.log('Erro: ' + err);
+
             throw new Error('Erro: ' + err);
         }
         redirect('/private/categories');

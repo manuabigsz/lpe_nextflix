@@ -16,7 +16,7 @@ export default async function Videos() {
         try {
             await deleteVideoDB(id);
         } catch (err) {
-            console.log('Erro: ' + err);
+
             throw new Error('Erro: ' + err);
         }
         redirect('/private/videos');
