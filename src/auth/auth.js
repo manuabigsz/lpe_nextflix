@@ -37,7 +37,7 @@ export const authOptions = {
                 }
                 return {
                     tipo: usuario.tipo ?? "user",
-                    id: usuario.email,
+                    id: usuario.id,
                     email: usuario.email,
                     name: usuario.nome,
                     plano: usuario.plano || 'gratis',

@@ -15,6 +15,7 @@ const autenticaUsuarioDB = async (objeto) => {
         }
 
         const usuario = results.rows[0];
+        console.lof
         return new Usuario(
             usuario.id,
             usuario.nome,
