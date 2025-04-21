@@ -7,7 +7,7 @@ Uma plataforma de streaming inspirada na Netflix, desenvolvida com **Next.js** p
 ## 🔗 Acesse o Projeto
 
 ▶️ **Site em Produção:**  
-https://lpe-nextflix-99z529utu-manuabigszs-projects.vercel.app/
+https://lpe-nextflix.vercel.app/
 
 ---
 
