@@ -27,5 +27,34 @@ const autenticaUsuarioDB = async (objeto) => {
         throw "Erro ao autenticar o usuário: " + err;
     }
 };
+const cadastraUsuarioDB = async (objeto) => {
+    try {
+        const { nome, email, senha, plano } = objeto;
 
-module.exports = { autenticaUsuarioDB };
+        console.log('[DB] Iniciando cadastro no banco de dados:', objeto);
+
+        const results = await pool.query(
+            `INSERT INTO usuarios (nome, email, senha, plano, data_cadastro)
+             VALUES ($1, $2, $3, $4, NOW())
+             RETURNING *`,
+            [nome, email, senha, plano]
+        );
+
+        const usuario = results.rows[0];
+        console.log('[DB] Cadastro concluído:', usuario);
+
+        return new Usuario(
+            usuario.id,
+            usuario.nome,
+            usuario.email,
+            usuario.plano,
+            usuario.data_cadastro
+        );
+    } catch (err) {
+        console.error('[DB] Erro no cadastro:', err);
+        throw "Erro ao cadastrar o usuário: " + err;
+    }
+};
+
+
+module.exports = { autenticaUsuarioDB, cadastraUsuarioDB };

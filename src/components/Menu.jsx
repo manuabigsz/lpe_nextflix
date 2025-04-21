@@ -67,12 +67,18 @@ function Menu() {
                                 </button>
                             </>
                         ) : (
-                            <button
+                            <> <button
                                 onClick={() => router.push('/login')}
                                 className="btn btn-outline-light btn-sm"
                             >
                                 Login
-                            </button>
+                            </button> <button
+                                onClick={() => router.push('/register')}
+                                className="btn btn-outline-light btn-sm"
+                            >
+                                    Registrar
+                                </button></>
+
                         )}
                     </Nav>
                 </Navbar.Collapse>
