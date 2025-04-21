@@ -52,9 +52,9 @@ function Menu() {
                     <Nav className="ms-auto align-items-center">
                         {session ? (
                             <>
-                                <span className="text-white me-3">
+                                {/* <span className="text-white me-3">
                                     Olá, <strong>{session.user?.name || session.user?.email}</strong>
-                                </span>
+                                </span> */}
                                 <Link className="btn btn-outline-light btn-sm me-2" href="/user">
                                     Meu Perfil
                                 </Link>
