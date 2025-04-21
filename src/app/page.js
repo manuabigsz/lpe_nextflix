@@ -1,6 +1,8 @@
 import { getVideosDB } from "@/bd/usecases/videoUseCase";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth/auth";
+import Link from "next/link";
+
 export default async function Home() {
   const session = await getServerSession(authOptions);
   const userName = session?.user?.name || session?.user?.email || "usuário";
@@ -14,26 +16,32 @@ export default async function Home() {
       <h3 className="text-white mb-3">{title}</h3>
       <div className="d-flex overflow-auto gap-3 pb-2">
         {items.map(video => (
-          <div
+          <Link
             key={video.id}
-            className="card bg-dark text-white border-0"
-            style={{
-              minWidth: "200px",
-              maxWidth: "200px",
-              flex: "0 0 auto",
-              transition: "transform 0.3s ease",
-            }}
+            href={`/video/${video.id}`}
+            className="text-decoration-none"
           >
-            <img
-              src={video.capa_video}
-              className="card-img-top"
-              alt={video.titulo}
-              style={{ height: "280px", objectFit: "cover" }}
-            />
-            <div className="card-body px-2 py-3">
-              <h6 className="card-title text-truncate">{video.titulo}</h6>
+            <div
+              className="card bg-dark text-white border-0"
+              style={{
+                minWidth: "200px",
+                maxWidth: "200px",
+                flex: "0 0 auto",
+                transition: "transform 0.3s ease",
+                cursor: "pointer",
+              }}
+            >
+              <img
+                src={video.capa_video}
+                className="card-img-top"
+                alt={video.titulo}
+                style={{ height: "280px", objectFit: "cover" }}
+              />
+              <div className="card-body px-2 py-3">
+                <h6 className="card-title text-truncate">{video.titulo}</h6>
+              </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </section>
