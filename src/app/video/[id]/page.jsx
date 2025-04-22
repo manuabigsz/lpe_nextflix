@@ -2,6 +2,7 @@ import { getVideoPorIdDB } from "@/bd/usecases/videoUseCase";
 import { getCategoriaPorCodigoDB } from "@/bd/usecases/categoriaUseCase";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth/auth";
+import { isFavoritoDB } from "@/bd/usecases/favoritoUseCase";
 
 export default async function VideoPage({ params }) {
     const { id } = params;
@@ -17,6 +18,11 @@ export default async function VideoPage({ params }) {
     }
 
     const categoria = await getCategoriaPorCodigoDB(video.categoria_id);
+
+    let ehFavorito = false;
+    if (session) {
+        ehFavorito = await isFavoritoDB({ usuario_id: session.user.id, video_id: id });
+    }
 
     const formatarData = (dataStr) => {
         const data = new Date(dataStr);
@@ -87,11 +93,14 @@ export default async function VideoPage({ params }) {
 
                         {session && (
                             <form method="POST" action={`/api/favoritos`}>
-                                <input type="hidden" name="video_id" value={video.id} />
-                                <button type="submit" className="btn btn-outline-light px-4 py-2">
-                                    <i className="bi bi-heart me-2"></i> Adicionar aos Favoritos
-                                </button>
-                            </form>
+                            <input type="hidden" name="video_id" value={video.id} />
+                            <input type="hidden" name="_method" value={ehFavorito ? "DELETE" : "POST"} />
+                            <button type="submit" className={`btn ${ehFavorito ? 'btn-light' : 'btn-outline-light'} px-4 py-2`}>
+                                <i className={`bi ${ehFavorito ? 'bi-heart-fill text-danger' : 'bi-heart'} me-2`}></i>
+                                {ehFavorito ? 'Remover dos Favoritos' : 'Adicionar aos Favoritos'}
+                            </button>
+                        </form>
+
                         )}
                     </div>
                 </div>
