@@ -118,22 +118,22 @@ const FormularioPage = async ({ params }) => {
                                 />
 
                                 <div className="form-group">
-                                    <label htmlFor="txtCategoriaId">Categoria</label>
-                                    <select
-                                        id="txtCategoriaId"
-                                        name="categoria_id"
-                                        value={video.categoria_id}
-                                        className="form-control"
-                                        required
-                                    >
-                                        <option value="">Selecione uma categoria</option>
-                                        {categorias.map((categoria) => (
-                                            <option key={categoria.id} value={categoria.id}>
-                                                {categoria.nome}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
+                                <label htmlFor="txtCategoriaId">Categoria</label>
+                                <select
+                                    id="txtCategoriaId"
+                                    name="categoria_id"
+                                    defaultValue={video.categoria_id}
+                                    className="form-control"
+                                    required
+                                >
+                                    <option value="">Selecione uma categoria</option>
+                                    {categorias.map((categoria) => (
+                                        <option key={categoria.codigo} value={categoria.codigo}>
+                                            {categoria.nome} - {categoria.codigo}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
 
                                 <br></br>
                                 <CampoEntradaFloating

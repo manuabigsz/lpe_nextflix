@@ -85,7 +85,6 @@ export default async function VideoPage({ params }) {
                         <p className="text-warning">Vídeo não disponível.</p>
                     )}
 
-                    {/* Botões */}
                     <div className="d-flex gap-3 flex-wrap">
                         <button className="btn btn-danger px-4 py-2">
                             <i className="bi bi-play-fill me-2"></i> Assistir agora

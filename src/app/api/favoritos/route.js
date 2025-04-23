@@ -32,6 +32,6 @@ export async function POST(req) {
         return NextResponse.redirect(`/video/${video_id}`);
     } catch (err) {
         console.error("Erro ao processar favorito:", err);
-        return NextResponse.json({ error: "Erro interno", err }, { status: 500 });
+        return NextResponse.redirect(`/`);
     }
 }
